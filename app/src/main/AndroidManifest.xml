@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.rave.yunwang">
+
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!--用于访问网络，网络定位需要上网-->
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <!--用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"></uses-permission>
+    <!--用于访问GPS定位-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
+    <!--用于获取运营商信息，用于支持提供运营商信息相关的接口-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+    <!--用于访问wifi网络信息，wifi信息会用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
+    <!--用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
+    <!--用于读取手机当前的状态-->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
+    <!--用于写入缓存数据到扩展存储卡-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
+    <!--用于申请调用A-GPS模块-->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS"></uses-permission>
+    <!--用于申请获取蓝牙信息进行室内定位-->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <application
+        android:name=".application.MyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher_yunwang"
+        android:label="@string/app_name_yunwang"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:roundIcon="@mipmap/ic_launcher_yunwang"
+        android:supportsRtl="true"
+        android:theme="@style/AppThemeYunwang"
+        tools:replace="android:label,android:icon,android:theme">
+        <!-- 高德地图定位 -->
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="b476283ff076e8d0785007cdca4e9fa3" />
+
+        <service android:name="com.amap.api.location.APSService"/>
+
+
+        <activity
+            android:name=".view.SplashActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".view.main.MainActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.LoginActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.AlterPasswordActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".view.AlterEmailActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.AlterPhoneNumActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.taskoverview.TaskOverviewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".view.RecordActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.S2iTestActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.S2IDemoCameraDemoActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.ShowErrorResultActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".view.ShowResultActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name="com.s2icode.camera2.S2iCamera2Activity" />
+        <activity android:name=".view.Camera1RecordActivity"
+            android:screenOrientation="portrait"/>
+
+
+        <!-- End -->
+
+    </application>
+
+</manifest>

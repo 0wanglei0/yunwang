@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#49A2FB</color>
+    <color name="colorPrimaryDark">#49A2FB</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="white_color">#ffffff</color>
+
+    <color name="bgProgressDialog">#a5000000</color>
+    <color name="mainColor">#49A2FB</color>
+    <color name="activityTitleTextColor">#FFFFFF</color>
+    <color name="dividerDashLineHorizontal">@android:color/darker_gray</color>
+    <color name="editTextHint1">#C2C2C2</color>
+    <color name="bgEditText1">#F9F9F9</color>
+    <color name="bgWhite">#FFFFFF</color>
+    <color name="bgDarkGrey">#333333</color>
+    <color name="textColorMain">#49A2FB</color>
+    <color name="textColorWhite">#FFFFFF</color>
+    <color name="textColorBlack">#292929</color>
+    <color name="textColorGrey">#AAAAAA</color>
+    <color name="dividerColor">#B0B0B0</color>
+
+    <color name="press_mask">#33000000</color>
+    <color name="black">#000000</color>
+    <color name="color_red_ccfa3c55">#ccfa3c55</color>
+    <color name="AQUAMARINE">#ff7fffd4</color>
+</resources>

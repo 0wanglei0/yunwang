@@ -1,0 +1,16 @@
+{
+  "colorGreen":"#28AF63",
+  "colorGray":"#494949",
+  "titleTextColor":"#000000",
+  "titleColor":"#ffffff",
+  "titleTextSize":18,
+  "themeColor": "#28AF63",
+  "webServiceUrl": "https://svc-yunwang.s2icode.com",
+  "webServiceToken": "96ebcc34-c327-454a-9402-88ba144b690e",
+  "aMapToken": "7e28589b81be366d84598137ccaa4bf3",
+  "showAboutAndProtocol":false,
+  "intervalTime": 5,
+  "showSettings": true,
+  "countDetectNum": 7
+}
+

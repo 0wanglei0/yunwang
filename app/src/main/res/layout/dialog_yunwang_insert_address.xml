@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="250dp"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:id="@+id/rl_exit">
+
+    <LinearLayout
+        android:id="@+id/camera_llayout_location_tip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/resultshapelocation"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/location_tip_tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:gravity="center"
+            android:paddingLeft="@dimen/dp10"
+            android:paddingRight="@dimen/dp10"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:text="@string/detect_permission_title"
+            android:textColor="@color/mainColor"
+            android:textSize="@dimen/sp16"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="#a3a3a3"
+            android:layout_marginBottom="10dp" />
+
+        <TextView
+            android:id="@+id/location_tip_tv_msg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:gravity="center"
+            android:paddingTop="@dimen/shadow_width"
+            android:paddingBottom="@dimen/dp10"
+            android:paddingLeft="@dimen/dp10"
+            android:paddingRight="@dimen/dp10"
+            android:layout_margin="@dimen/dp20"
+            android:text="请确认您所在位置是工作位置"
+            android:textColor="@color/black"
+            android:textSize="@dimen/sp14" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/transparent"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_marginBottom="@dimen/dp20">
+            <LinearLayout
+                android:id="@+id/btn_confirm_layout"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:layout_margin="@dimen/dp10"
+                android:layout_marginStart="@dimen/dp20"
+                style="@style/SubmitButton"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/grain_tip_btn_confirm"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@color/transparent"
+                    android:text="@string/btn_confirm"
+                    android:textColor="@color/white_color"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/sp12" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/btn_cancel_layout"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                style="@style/SubmitButton"
+                android:layout_marginEnd="@dimen/dp20"
+                android:layout_margin="@dimen/dp10"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/grain_tip_btn_cancel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/transparent"
+                    android:text="@string/cancel"
+                    android:paddingBottom="@dimen/dp10"
+                    android:paddingTop="@dimen/dp10"
+                    android:textColor="@color/white_color"
+                    android:textAllCaps="false"
+                    android:textSize="@dimen/sp12" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

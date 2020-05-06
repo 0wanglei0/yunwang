@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/yw_progress_view"
+    android:layout_width="260dp"
+    android:layout_height="240dp"
+    android:layout_gravity="center"
+    android:background="@drawable/resultshapelocation"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/s2i_json_invalidate_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:gravity="center"
+        android:layout_gravity="top"
+        android:layout_marginTop="@dimen/dp10"
+        android:layout_marginBottom="@dimen/dp10"
+        android:paddingLeft="@dimen/dp10"
+        android:paddingRight="@dimen/dp10"
+        android:text="提示"
+        android:textColor="#49a2fb"
+        android:textSize="@dimen/sp16"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/bg_color" />
+
+    <ProgressBar
+        android:id="@+id/zip_progress"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_margin="20dp"
+        android:layout_gravity="center"
+        android:max="100"
+        android:progress="0"
+        android:indeterminate="false"
+        android:progressDrawable="@drawable/dash_corner_horizontal" />
+
+    <TextView
+        android:id="@+id/s2i_json_invalidate_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/transparent"
+        android:gravity="center"
+        android:text="视频正在压缩，请稍后"
+        android:paddingBottom="@dimen/dp10"
+        android:textColor="@color/black"
+        android:textSize="@dimen/sp14" />
+</LinearLayout>

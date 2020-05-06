@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:gravity="center_vertical"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp">
+
+    <TextView
+        android:id="@+id/tv_left"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginRight="15dp"
+        android:gravity="center_vertical|left"
+        android:textColor="@color/textColorBlack"
+        android:textSize="14sp"
+        app:layout_constraintLeft_toLeftOf="parent" />
+
+    <EditText
+        android:id="@+id/et_right"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:background="@null"
+        android:ellipsize="end"
+        android:gravity="center_vertical|right"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textColor="@color/textColorBlack"
+        android:textSize="14sp"
+        app:layout_constraintLeft_toRightOf="@id/tv_left"
+        app:layout_constraintRight_toLeftOf="@id/iv_arrow" />
+
+    <ImageView
+        android:id="@+id/iv_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="15dp"
+        android:src="@mipmap/ic_arrow_next"
+        app:layout_constraintLeft_toRightOf="@id/et_right"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <View
+        android:id="@+id/divider_dash_line"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@drawable/dash_line_horizontal"
+        android:layerType="software"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

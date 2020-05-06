@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/editTextHint1"
+    android:orientation="vertical"
+    tools:context=".view.main.MainActivity">
+
+    <include
+        android:id="@+id/rl_title_bar"
+        layout="@layout/layout_title_bar" />
+    <LinearLayout
+        android:id="@+id/ll_et_title"
+        style="@style/SearchEditText"
+       >
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:src="@mipmap/ic_search" />
+
+        <EditText
+            android:id="@+id/et_search_key_word"
+            android:layout_width="361dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:hint="@string/hin_search"
+            android:inputType="text"
+            android:lines="1"
+            android:textColor="@color/gray_word"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/iv_cancel"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginRight="10dp"
+            android:src="@mipmap/ic_cancel2" />
+
+    </LinearLayout>
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refreshLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/bgWhite"
+            android:overScrollMode="never" />
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    <LinearLayout
+        android:id="@+id/ll_null"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/write"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/img_empty_content" />
+    </LinearLayout>
+</LinearLayout>

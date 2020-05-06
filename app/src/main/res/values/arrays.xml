@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="main_activity_tab">
+        <item>@string/bottom_bar_record_task</item>
+        <item>@string/bottom_bar_record_video</item>
+        <item>@string/bottom_bar_record_user_center</item>
+    </string-array>
+</resources>

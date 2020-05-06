@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/bg_splash"
+    tools:context=".view.LoginActivity">
+
+    <View
+        android:id="@+id/center"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/et_username"
+        style="@style/LoginInfoEditText"
+        android:hint="@string/input_username_item_hint"
+        android:paddingLeft="50dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/center" />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginLeft="15dp"
+        android:src="@mipmap/ic_login_username"
+        app:layout_constraintBottom_toBottomOf="@id/et_username"
+        app:layout_constraintLeft_toLeftOf="@id/et_username"
+        app:layout_constraintTop_toTopOf="@id/et_username" />
+
+    <EditText
+        android:id="@+id/et_password1"
+        style="@style/LoginInfoEditText"
+        android:layout_marginTop="25dp"
+        android:hint="@string/input_password_item_hint"
+        android:inputType="textPassword"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_username" />
+
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginLeft="15dp"
+        android:src="@mipmap/ic_login_password"
+        app:layout_constraintBottom_toBottomOf="@+id/et_password1"
+        app:layout_constraintLeft_toLeftOf="@id/et_password1"
+        app:layout_constraintTop_toTopOf="@+id/et_password1" />
+
+    <ImageView
+        android:id="@+id/iv_password_invisible1"
+        android:layout_width="50dp"
+        android:layout_height="40dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:src="@mipmap/ic_password_invisible"
+        app:layout_constraintBottom_toBottomOf="@id/et_password1"
+        app:layout_constraintRight_toRightOf="@id/et_password1"
+        app:layout_constraintTop_toTopOf="@id/et_password1" />
+
+    <Button
+        android:id="@+id/btn_login"
+        style="@style/SubmitButton"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="@string/btn_login_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/et_password1" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="@string/forget_password_tips"
+        android:textColor="@color/textColorGrey"
+        android:textSize="12sp"
+        app:layout_constraintLeft_toLeftOf="@id/btn_login"
+        app:layout_constraintRight_toRightOf="@id/btn_login"
+        app:layout_constraintTop_toBottomOf="@id/btn_login" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
