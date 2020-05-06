@@ -134,7 +134,7 @@ public class RecordActivity extends AppCompatActivity implements RecordContract.
 //                            }
                                     if (count > 0) {
                                         count--;
-                                        vinCodeOcr(path);
+//                                        vinCodeOcr(path);
                                     }
                                 }
                                 break;
@@ -185,13 +185,13 @@ public class RecordActivity extends AppCompatActivity implements RecordContract.
 
     public void initTessBaseAPI() {
         baseApi = new TessBaseAPI();
-        String fileName = "eng";
+        String fileName = "group";
         File dir = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS);
         boolean initResult = baseApi.init(dir.getAbsolutePath(), fileName);
         if (!initResult) {
             showErrorTips("初始化失败");
         }
-        baseApi.setPageSegMode(TessBaseAPI.PageSegMode.PSM_AUTO);
+        baseApi.setPageSegMode(TessBaseAPI.PageSegMode.PSM_SINGLE_BLOCK);
     }
 
     private void vinCodeOcr(final String filePath) {
@@ -260,13 +260,6 @@ public class RecordActivity extends AppCompatActivity implements RecordContract.
             }
         });
         return result;
-//        try {
-//            if (StringUtils.isNotEmpty(path) && isValidVinCode) {
-//                presenter.uploadImage(true, path);
-//            }
-//        } catch (Exception e) {
-//            showErrorTips("您的手机不支持自动识别Vin码，请联系供应商");
-//        }
     }
 
     public void setScanAreaFrame(int width, int height) {
@@ -513,11 +506,11 @@ public class RecordActivity extends AppCompatActivity implements RecordContract.
             if (currentType == TYPE_VIN_CODE) {
                 vinBitmap = ImageUtils.rotateBmp(ImageUtils.convertDataToBitmap(data, imageWidth, imageHeight), 90);
                 vinBitmap = ImageUtils.cropBitmap(vinBitmap, new Rect(0, vinBitmap.getHeight() / 3, vinBitmap.getWidth(), vinBitmap.getHeight() * 2 / 3));
-//                vinCodeResult = validateVinCodeByC(vinBitmap);
+                vinCodeResult = validateVinCodeByC(vinBitmap);
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        cameraView.getVinPicture(vinBitmap);
+//                        cameraView.getVinPicture(vinBitmap);
                     }
                 });
 
