@@ -139,10 +139,21 @@ public class Camera1RecordActivity extends AppCompatActivity implements RecordCo
                     public void uploadFile(String path, boolean fromPreview) {
                         switch (currentType) {
                             case TYPE_VIN_CODE:
-                                if (count > 0) {
-                                    count--;
-                                    vinCodeOcr(path);
+                                if (StringUtils.isNotEmpty(path) && isValidVinCode) {
+                                    presenter.uploadImage(true, path);
                                 }
+                                try {
+                                    if (StringUtils.isNotEmpty(path) && isValidVinCode) {
+                                        isUploadVinPic = true;
+                                        presenter.uploadImage(true, path);
+                                    }
+                                } catch (Exception e) {
+                                    showErrorTips("您的手机不支持自动识别Vin码，请联系供应商");
+                                }
+//                                if (count > 0) {
+//                                    count--;
+//                                    vinCodeOcr(path);
+//                                }
                                 break;
                             case TYPE_VIDEO:
                                 ivRecordOperator.setImageResource(R.mipmap.ic_take_photo);
@@ -166,41 +177,33 @@ public class Camera1RecordActivity extends AppCompatActivity implements RecordCo
         });
 
         userInfo = SPUtils.getObject(this, SPUtils.LOGIN_USER, UserInfoBean.class);
-//        initTessBaseAPI();
+        initTessBaseAPI();
     }
 
     private TessBaseAPI baseApi;
     public void initTessBaseAPI() {
         baseApi = new TessBaseAPI();
-        String fileName = "eng";
+        String fileName = "group";
         File dir = getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS);
         boolean initResult = baseApi.init(dir.getAbsolutePath(), fileName);
         if (!initResult) {
             showErrorTips("初始化失败");
         }
-        baseApi.setPageSegMode(TessBaseAPI.PageSegMode.PSM_AUTO);
+        baseApi.setPageSegMode(TessBaseAPI.PageSegMode.PSM_SINGLE_BLOCK);
     }
 
-    private String validateVinCodeByC(Bitmap bitmap) {
+    private void validateVinCodeByC(Bitmap bitmap) {
         //记得要在对应的文件夹里放上要识别的图片文件，比如我这里就在sd卡根目录放了img.png
-        String result = "";
         try {
             baseApi.setImage(bitmap);
-            final String result1 = baseApi.getUTF8Text();
+            final String result = baseApi.getUTF8Text();
             //这里，你可以把result的值赋值给你的TextView
-//            baseApi.end();
-            result = result1;
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    showErrorTips("识别结果: " + result1);
-                }
-            });
+            baseApi.end();
+            isValidVinCode = vinCode.equals(result);
         } catch (Exception e) {
             e.printStackTrace();
+            isValidVinCode = false;
         }
-
-        return result;
     }
 
     public void setScanAreaFrame(int width, int height) {
@@ -420,11 +423,21 @@ public class Camera1RecordActivity extends AppCompatActivity implements RecordCo
 
         @Override
         protected void onPostExecute(Integer decodeCode) {
+            if (currentType == TYPE_VIN_CODE) {
+                if (isValidVinCode) {
+                    showErrorTips("vin码验证成功");
+                } else {
+                    cameraView.startCapture();
+                    showErrorTips("vin码验证失败");
+                }
+                return;
+            }
+
             if (decodeCode == 1) {
                 thisActivity.skipDecode = true;
             }
 
-            if (currentType == TYPE_S2I_CODE || currentType == TYPE_VIN_CODE) {
+            if (currentType == TYPE_S2I_CODE) {
                 cameraView.startCapture();
             }
         }
@@ -443,14 +456,14 @@ public class Camera1RecordActivity extends AppCompatActivity implements RecordCo
                 vinBitmap = ImageUtils.rotateBmp(bitmap, 90);
                 if (currentType == TYPE_VIN_CODE) {
                     vinBitmap = ImageUtils.cropBitmap(vinBitmap, new Rect(0, vinBitmap.getHeight() / 3, vinBitmap.getWidth(), vinBitmap.getHeight() * 2 / 3));
-//                    vinCodeResult = validateVinCodeByC(vinBitmap);
+                    validateVinCodeByC(vinBitmap);
 
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            cameraView.getVinPicture(vinBitmap);
-                        }
-                    });
+//                    runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            cameraView.getVinPicture(vinBitmap);
+//                        }
+//                    });
                 }
             }
 

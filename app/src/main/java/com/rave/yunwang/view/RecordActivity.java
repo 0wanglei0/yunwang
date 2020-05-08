@@ -74,13 +74,13 @@ public class RecordActivity extends AppCompatActivity implements RecordContract.
     private TextView tvCurrentType;
     private CameraView cameraView;
     private ImageView ivRecordOperator;
-    private  int ScreenWidth;
+    private int ScreenWidth;
     private int taskId;
-    private String vinCode,s2iCode1,s2iCode2;
+    private String vinCode, s2iCode1, s2iCode2;
     private UserInfoBean userInfo;
     private FrameLayout layoutScanFrame;
     private RecordContract.Presenter presenter;
-    private int s2iSuNum=2;//扫描二维码成功次数
+    private int s2iSuNum = 2;//扫描二维码成功次数
     private String vinResult;
     private String vinCodeResult;
     private boolean skipDecode = false;//跳过解码
@@ -102,7 +102,7 @@ public class RecordActivity extends AppCompatActivity implements RecordContract.
         WindowManager wm = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics dm = new DisplayMetrics();
         wm.getDefaultDisplay().getMetrics(dm);
-        ScreenWidth= dm.widthPixels;
+        ScreenWidth = dm.widthPixels;
         presenter = new RecordPresenter();
         presenter.attachView(this);
         setContentView(R.layout.activity_record);
@@ -126,16 +126,16 @@ public class RecordActivity extends AppCompatActivity implements RecordContract.
                             case TYPE_VIN_CODE://Vin码
                                 if (fromPreview) {
 //                            try {
-//                                if (StringUtils.isNotEmpty(path) && isValidVinCode) {
-//                                    presenter.uploadImage(true, path);
-//                                }
+                                    if (StringUtils.isNotEmpty(path) && isValidVinCode) {
+                                        presenter.uploadImage(true, path);
+                                    }
 //                            } catch (Exception e) {
 //                                showErrorTips("您的手机不支持自动识别Vin码，请联系供应商");
 //                            }
-                                    if (count > 0) {
-                                        count--;
+//                                    if (count > 0) {
+//                                        count--;
 //                                        vinCodeOcr(path);
-                                    }
+//                                    }
                                 }
                                 break;
                             case TYPE_VIDEO://上传视频
@@ -162,7 +162,7 @@ public class RecordActivity extends AppCompatActivity implements RecordContract.
                 tvCurrentType.setText(getProcessTips());
             }
         });
-        ivRecordOperator=cameraView.findViewById(R.id.iv_record_operator);
+        ivRecordOperator = cameraView.findViewById(R.id.iv_record_operator);
         ivRecordOperator.setVisibility(View.GONE);
         cameraView.setDemoCameraBaseInterface(this);
         cameraView.setInitCallback(this);
@@ -247,19 +247,13 @@ public class RecordActivity extends AppCompatActivity implements RecordContract.
 //        }
 //    }
 
-    private String validateVinCodeByC(Bitmap bitmap) {
+    private void validateVinCodeByC(Bitmap bitmap) {
         //记得要在对应的文件夹里放上要识别的图片文件，比如我这里就在sd卡根目录放了img.png
         baseApi.setImage(bitmap);
-        final String result= baseApi.getUTF8Text();
+        final String result = baseApi.getUTF8Text();
         //这里，你可以把result的值赋值给你的TextView
         baseApi.end();
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                showErrorTips("识别结果: " + result);
-            }
-        });
-        return result;
+        isValidVinCode = vinCode.equals(result);
     }
 
     public void setScanAreaFrame(int width, int height) {
@@ -344,7 +338,7 @@ public class RecordActivity extends AppCompatActivity implements RecordContract.
                 ivRecordOperator.setVisibility(View.VISIBLE);
                 cameraView.closeS2i();
                 cameraView.closeFlash();
-                setScanAreaFrame(ScreenWidth-40, (int) ((ScreenWidth-40) / 9f * 6));
+                setScanAreaFrame(ScreenWidth - 40, (int) ((ScreenWidth - 40) / 9f * 6));
                 return "正在拍摄侧面玻璃";
             case TYPE_VIDEO:
                 layoutScanFrame.setVisibility(View.GONE);
@@ -356,25 +350,25 @@ public class RecordActivity extends AppCompatActivity implements RecordContract.
                 ivRecordOperator.setVisibility(View.VISIBLE);
                 cameraView.closeS2i();
                 cameraView.openFlash();//打开闪关灯
-                setScanAreaFrame(ScreenWidth-40, (int) ((ScreenWidth-40) / 9f * 6));
+                setScanAreaFrame(ScreenWidth - 40, (int) ((ScreenWidth - 40) / 9f * 6));
                 return "正在拍摄车头";
             case TYPE_STORE_LOGO:
                 ivRecordOperator.setVisibility(View.VISIBLE);
                 cameraView.closeS2i();
                 cameraView.closeFlash();
-                setScanAreaFrame(ScreenWidth-40, (int) ((ScreenWidth-40) / 9f * 6));
+                setScanAreaFrame(ScreenWidth - 40, (int) ((ScreenWidth - 40) / 9f * 6));
                 return "正在拍摄门店Logo";
             case TYPE_TAG:
                 ivRecordOperator.setVisibility(View.VISIBLE);
                 cameraView.closeS2i();
                 cameraView.closeFlash();
-                setScanAreaFrame(ScreenWidth-40, (int) ((ScreenWidth-40) / 9f * 6));
+                setScanAreaFrame(ScreenWidth - 40, (int) ((ScreenWidth - 40) / 9f * 6));
                 return "正在拍摄标签";
             case TYPE_S2I_CODE:
                 ivRecordOperator.setVisibility(View.GONE);
                 cameraView.openS2i();//
                 cameraView.openFlash();//打开闪关灯
-                setScanAreaFrame((int)s2iClientInitResult.getS2iParam().getFocusFrameWidth(), (int)s2iClientInitResult.getS2iParam().getFocusFrameHeight());
+                setScanAreaFrame((int) s2iClientInitResult.getS2iParam().getFocusFrameWidth(), (int) s2iClientInitResult.getS2iParam().getFocusFrameHeight());
                 return "正在扫描S2i码";
             default:
                 break;
@@ -456,12 +450,12 @@ public class RecordActivity extends AppCompatActivity implements RecordContract.
                     View v = LayoutInflater.from(RecordActivity.this).inflate(R.layout.yw_progress_dialog, null);
                     LinearLayout layout = v.findViewById(R.id.yw_progress_view);
                     progressBar = v.findViewById(R.id.zip_progress);
-                    progressDialog.setContentView(layout);;
+                    progressDialog.setContentView(layout);
                     progressDialog.setCancelable(false);
                     progressDialog.show();
                 }
 
-                if (progressDialog != null && progressDialog.isShowing()){
+                if (progressDialog != null && progressDialog.isShowing()) {
                     progressBar.setProgress(progress);
                     if (progress == 100) {
                         progressDialog.dismiss();
@@ -488,13 +482,13 @@ public class RecordActivity extends AppCompatActivity implements RecordContract.
 
         @Override
         protected void onPostExecute(Integer decodeCode) {//解码代码
-//            if (currentType == TYPE_VIN_CODE) {
-//                if (isValidVinCode) {
-//                    showErrorTips("vin码验证成功");
-//                } else {
-//                    showErrorTips("vin码验证失败");
-//                }
-//            }
+            if (currentType == TYPE_VIN_CODE) {
+                if (isValidVinCode) {
+                    showErrorTips("vin码验证成功");
+                } else {
+                    showErrorTips("vin码验证失败");
+                }
+            }
 
             if (decodeCode == 1) {
                 thisActivity.skipDecode = true;
@@ -506,13 +500,13 @@ public class RecordActivity extends AppCompatActivity implements RecordContract.
             if (currentType == TYPE_VIN_CODE) {
                 vinBitmap = ImageUtils.rotateBmp(ImageUtils.convertDataToBitmap(data, imageWidth, imageHeight), 90);
                 vinBitmap = ImageUtils.cropBitmap(vinBitmap, new Rect(0, vinBitmap.getHeight() / 3, vinBitmap.getWidth(), vinBitmap.getHeight() * 2 / 3));
-                vinCodeResult = validateVinCodeByC(vinBitmap);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
+                validateVinCodeByC(vinBitmap);
+//                runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
 //                        cameraView.getVinPicture(vinBitmap);
-                    }
-                });
+//                    }
+//                });
 
                 return -1;
             }
@@ -530,17 +524,17 @@ public class RecordActivity extends AppCompatActivity implements RecordContract.
 
     @Override
     public void onS2iCodeResult(S2iCodeResult s2iCodeResult) {
-        s2iSuNum=s2iSuNum-1;
-        if(s2iSuNum==1){
-            s2iCode1=s2iCodeResult.data;
+        s2iSuNum = s2iSuNum - 1;
+        if (s2iSuNum == 1) {
+            s2iCode1 = s2iCodeResult.data;
             showErrorTips("扫描成功,请扫描下一张图");
         }
-        if(s2iSuNum==0){
-            s2iCode2=s2iCodeResult.data;
-            if(s2iCode1.equals(s2iCode2)){
+        if (s2iSuNum == 0) {
+            s2iCode2 = s2iCodeResult.data;
+            if (s2iCode1.equals(s2iCode2)) {
                 showErrorTips("必须是两张不同的二维码");
-                s2iCode2="";
-                s2iSuNum=s2iSuNum+1;
+                s2iCode2 = "";
+                s2iSuNum = s2iSuNum + 1;
 //            }  if(!s2iCode1.equals(s2iCode2)){
             } else {
                 showErrorTips("扫描结束！");
