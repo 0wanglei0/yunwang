@@ -252,8 +252,10 @@ public class RecordActivity extends AppCompatActivity implements RecordContract.
         baseApi.setImage(bitmap);
         final String result = baseApi.getUTF8Text();
         //这里，你可以把result的值赋值给你的TextView
-        baseApi.end();
         isValidVinCode = vinCode.equals(result);
+        if (isValidVinCode) {
+            baseApi.end();
+        }
     }
 
     public void setScanAreaFrame(int width, int height) {
@@ -499,7 +501,19 @@ public class RecordActivity extends AppCompatActivity implements RecordContract.
         protected Integer doInBackground(Void... voids) {
             if (currentType == TYPE_VIN_CODE) {
                 vinBitmap = ImageUtils.rotateBmp(ImageUtils.convertDataToBitmap(data, imageWidth, imageHeight), 90);
-                vinBitmap = ImageUtils.cropBitmap(vinBitmap, new Rect(0, vinBitmap.getHeight() / 3, vinBitmap.getWidth(), vinBitmap.getHeight() * 2 / 3));
+
+                float widthScale = (float) WindowUtils.dip2px(350f) / ScreenWidth;
+                float heightScale = (float) WindowUtils.dip2px(80f) / WindowUtils.getScreenHeight(RecordActivity.this);
+                float cropWidth = vinBitmap.getWidth() * widthScale;
+                float cropHeight = vinBitmap.getHeight() * heightScale;
+                int startX = (int) ((vinBitmap.getWidth() - cropWidth) / 2);
+                int startY = (int) ((vinBitmap.getHeight() - cropHeight) / 2);
+                Rect cropRect = new Rect(startX, startY, (int) cropWidth + startX, (int) cropHeight + startY);
+                if (cropWidth <= 0 || cropHeight <= 0) {
+                    cropRect = new Rect(0, vinBitmap.getHeight() / 3, vinBitmap.getWidth(), vinBitmap.getHeight() * 2 / 3);
+                }
+                vinBitmap = ImageUtils.cropBitmap(vinBitmap, cropRect);
+//                FilePathUtils.saveImage2(vinBitmap);
                 validateVinCodeByC(vinBitmap);
 //                runOnUiThread(new Runnable() {
 //                    @Override

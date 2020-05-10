@@ -94,7 +94,7 @@ public class MyApplication extends BaseApplication {
     }
 
     private void copyFileFromAssets() {
-        String fileName = "eng.traineddata";
+        String fileName = "group.traineddata";
         File dir = this.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS);
         if (dir != null && (!dir.exists() || !dir.isDirectory())) {
             dir.mkdir();

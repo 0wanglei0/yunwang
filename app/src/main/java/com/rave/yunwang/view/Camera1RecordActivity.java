@@ -110,22 +110,6 @@ public class Camera1RecordActivity extends AppCompatActivity implements RecordCo
         cameraView = findViewById(R.id.drawer_layout);
         ivRecordOperator = cameraView.findViewById(R.id.iv_record_operator);
         ivRecordOperator.setVisibility(View.VISIBLE);
-
-        cameraView.setDemoCameraBaseInterface(this);
-        cameraView.setInitCallback(this);
-
-        this.taskId = getIntent().getExtras().getInt(EXTRA_TASK_ID, -1);
-        this.vinCode = getIntent().getExtras().getString(EXTRA_VIN_CODE);
-        tvTitle.setText(String.format("对%s车辆进行拍摄", getVinCode()));
-        layoutScanFrame = findViewById(R.id.layout_scan_frame);
-
-        ivBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-                finish();
-            }
-        });
         maskView = findViewById(R.id.first_mask);
         startImage = findViewById(R.id.iv_start);
         tvCurrentType.setText("录制视频中请按照提示进行拍摄");
@@ -139,9 +123,6 @@ public class Camera1RecordActivity extends AppCompatActivity implements RecordCo
                     public void uploadFile(String path, boolean fromPreview) {
                         switch (currentType) {
                             case TYPE_VIN_CODE:
-                                if (StringUtils.isNotEmpty(path) && isValidVinCode) {
-                                    presenter.uploadImage(true, path);
-                                }
                                 try {
                                     if (StringUtils.isNotEmpty(path) && isValidVinCode) {
                                         isUploadVinPic = true;
@@ -172,7 +153,23 @@ public class Camera1RecordActivity extends AppCompatActivity implements RecordCo
                         }
                     }
                 });
+                cameraView.startCapture();
                 tvCurrentType.setText(getProcessTips());
+            }
+        });
+
+        cameraView.setDemoCameraBaseInterface(this);
+        cameraView.setInitCallback(this);
+        this.taskId = getIntent().getExtras().getInt(EXTRA_TASK_ID, -1);
+        this.vinCode = getIntent().getExtras().getString(EXTRA_VIN_CODE);
+        tvTitle.setText(String.format("对%s车辆进行拍摄", getVinCode()));
+        layoutScanFrame = findViewById(R.id.layout_scan_frame);
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+                cameraView.closeCamera();
+                finish();
             }
         });
 
@@ -197,9 +194,10 @@ public class Camera1RecordActivity extends AppCompatActivity implements RecordCo
         try {
             baseApi.setImage(bitmap);
             final String result = baseApi.getUTF8Text();
-            //这里，你可以把result的值赋值给你的TextView
-            baseApi.end();
             isValidVinCode = vinCode.equals(result);
+            if (isValidVinCode) {
+                baseApi.end();
+            }
         } catch (Exception e) {
             e.printStackTrace();
             isValidVinCode = false;
@@ -208,8 +206,8 @@ public class Camera1RecordActivity extends AppCompatActivity implements RecordCo
 
     public void setScanAreaFrame(int width, int height) {
         RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) layoutScanFrame.getLayoutParams();
-        layoutParams.width = (int) width;
-        layoutParams.height = (int) height;
+        layoutParams.width = width;
+        layoutParams.height = height;
         layoutScanFrame.setLayoutParams(layoutParams);
     }
 
@@ -370,6 +368,10 @@ public class Camera1RecordActivity extends AppCompatActivity implements RecordCo
 
     @Override
     public void receivePreviewImageData(Bitmap bitmap, byte[] data, int imageType) {
+        if (startImage.getVisibility() == View.VISIBLE) {
+            return;
+        }
+
         if ((detectAsyncTask == null || detectAsyncTask.getStatus() == AsyncTask.Status.FINISHED)) {
             detectAsyncTask = new S2iDetectAsyncTask(bitmap, data, imageType, this);
             detectAsyncTask.execute();
@@ -455,7 +457,18 @@ public class Camera1RecordActivity extends AppCompatActivity implements RecordCo
             } else {
                 vinBitmap = ImageUtils.rotateBmp(bitmap, 90);
                 if (currentType == TYPE_VIN_CODE) {
-                    vinBitmap = ImageUtils.cropBitmap(vinBitmap, new Rect(0, vinBitmap.getHeight() / 3, vinBitmap.getWidth(), vinBitmap.getHeight() * 2 / 3));
+                    float widthScale = (float) WindowUtils.dip2px(350f) / ScreenWidth;
+                    float heightScale = (float) WindowUtils.dip2px(80f) / WindowUtils.getScreenHeight(Camera1RecordActivity.this);
+                    float cropWidth = vinBitmap.getWidth() * widthScale;
+                    float cropHeight = vinBitmap.getHeight() * heightScale;
+                    int startX = (int) ((vinBitmap.getWidth() - cropWidth) / 2);
+                    int startY = (int) ((vinBitmap.getHeight() - cropHeight) / 2);
+                    Rect cropRect = new Rect(startX, startY, (int) cropWidth + startX, (int) cropHeight + startY);
+                    if (cropWidth <= 0 || cropHeight <= 0) {
+                        cropRect = new Rect(0, vinBitmap.getHeight() / 3, vinBitmap.getWidth(), vinBitmap.getHeight() * 2 / 3);
+                    }
+                    vinBitmap = ImageUtils.cropBitmap(vinBitmap, cropRect);
+//                    FilePathUtils.saveImage2(vinBitmap);
                     validateVinCodeByC(vinBitmap);
 
 //                    runOnUiThread(new Runnable() {
